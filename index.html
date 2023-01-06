@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jessi.ca.rr</title>
+
+    <link rel="icon" type="image/x-icon" href="images/favi-09.ico">
+
+    <!-- js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- style -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <!-- side bars -->
+    <div class="overlay">
+        <!-- about sidepanel -->
+        <!-- clickable always visible portion of sidepanel -->
+        <div class="sidepanel-wrapper">
+
+            <div class="sp-clicker">
+                <div class="label">
+                    About
+                </div>
+            </div>
+
+            <!-- actual sidepanel -->
+            <div class="sidepanel">
+                <div class="sp-content">
+
+                    <div class="its-me">
+                        <img src="images/me2.jpeg" alt="person smiling and squinting, taking a selfie with a glacier">
+                    </div>
+
+                    <div class="email">say hi at <a href="mailto: jessicascarr989@gmail.com">jessicascarr989(at)gmail.com</a></div>
+
+                    <div class="socials">
+                        <ul>
+                            <li><a target="_blank" href="files/Carr_CV1.pdf">CV</a></li>
+                            <li><a target="_blank" href="https://github.com/jessvoiture">Github</a></li>
+                            <li><a target="_blank" href="https://www.behance.net/jessicacarr5">Behance</a></li>
+                            <li><a target="_blank" href="https://www.linkedin.com/in/jessica-rr/">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                
+                </div>
+            </div>
+
+            <!-- work sidepanel -->
+            <div class="label-wrapper" id="work-label">
+                <div class="label">
+                    Work
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- intro front page -->
+    <div class="opener">
+
+        <div class="bg">
+
+            <div class="title">
+                Jess Carr
+            </div>
+
+            <div class="bio">
+                I am a recent graduate (Dec ‘22) of Northeastern University where I studied Environmental Science and Graphic and Information Design. I enjoy data, coding, graphic design, photography, and visual journalism. My favorite tools are R, d3.js, and the Adobe Creative Suite. See relevant projects below.
+            </div>
+
+            <!-- <div class=test></div> -->
+
+        </div>
+    </div>
+
+    <!-- portfolio -->
+    <div class="pf">
+        <div class="pf-header">Selected Work</div>
+
+        <!-- fleshed out projects -->
+        <div id="proj_list" class="proj-block">
+            <ul>
+                <!-- for each project listed -->
+                <li v-for="project in projects" :id="project.title" class="fleshed-list">
+                    <div class="divider"></div> <!-- black dividing line -->
+                    <div class="proj-title"> 
+                        <a target=”_blank” :href="project.link">{{ project.title }}</a>
+                    </div>
+                    <div class="proj-year"> {{ project.year }}</div>
+                     
+                    <!-- description and images flex box -->
+                    <div class="proj-bucket">
+                        <div class="proj-text">
+                            <div class="proj-desc"> {{ project.desc }}</div>
+                            <div class="proj-tools"> Tools: {{ project.tools }}</div>
+                        </div>
+                        
+                        <div class="proj-images">
+                            <!-- videos -->
+                            <a v-if = "project.videos!=null" 
+                                v-for="video in project.videos"
+                                target="_blank" 
+                                :href="video.url">
+                                <video loop="true" autoplay="autoplay" muted playsinline>
+                                    <source :src="video.src">
+                                </video>
+                            </a>
+
+                            <!-- images -->
+                            <a v-if = "project.images!=null" 
+                                v-for="image in project.images"
+                                target="_blank" 
+                                :href="image.url">
+                                <img :src="image.src" :alt="image.alt" class="pf-img" />
+                            </a>
+                            
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="divider"></div> <!-- black dividing line -->
+
+       <!-- links to more projects -->
+        <div class="proj-links">
+
+            <div class="pf-header-secondary">Even More Work!</div>
+            <div class="divider-secondary"></div> <!-- black dividing line -->
+
+            <ul>
+                <li v-for="projlink in projlinks" :id="projlink.title" class="hover-text">
+
+                    <div class="proj-line">
+
+                        <div class="link-title">
+                            <a class="hover" target="_blank" :href="projlink.link"
+                                onpointerenter="showImage(this)" onpointerleave="hideImage(this)">
+                                {{projlink.title}}
+                                <img class="hover-image" :src="projlink.image"/>
+                            </a>
+                        </div>
+    
+                        <div class="link-year">
+                                {{projlink.year}}
+                        </div>
+
+                    </div>
+
+                    <div class="divider-secondary"></div> <!-- black dividing line -->
+
+                </li>
+            </ul>
+            
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- vue js -->
+        <script>
+        new Vue({
+            el: "#proj_list",
+            data: {
+            projects: [
+                {   title: "Divided States of America",
+                    link: "https://jessvoiture.github.io/state_policy/",
+                    year: "2021",
+                    tools: "d3.js, Adobe Illustrator, Google Sheets",
+                    desc: "Demers cartogram which visualises state level policy across an array of policy areas. The project was originally created in Adobe Illustrator for risQ, but was recreated using open source data in d3.js.",
+                    images: [],
+                    videos: [{src: "images/vid_state.mov", url: "https://jessvoiture.github.io/state_policy/"}]
+                },
+                {   title: "Covid Mobility Trends",
+                    link: "https://jessvoiture.github.io/covid_mobility_trends/",
+                    year: "2022",
+                    tools: "d3.js, R",
+                    desc: "Interactive visual story investigating voluntary versus governmental responses to COVID-19 in the US through Google's Mobility Trends.",
+                    images: [],
+                    videos: [{src: "images/vid1_covid.mov", url: "https://jessvoiture.github.io/covid_mobility_trends/"}]
+                },
+                {   title: "Italy Photo Essay",
+                    link: "https://jessvoiture.github.io/italy/",
+                    year: "2022",
+                    tools: "Adobe Premiere Pro, Adobe Lightroom, Javascript",
+                    desc: "A photo and video essay of a trip to the Dolomites inspired by the New York Times' 52 Places Series.",
+                    images: [],
+                    videos: [{src: "images/vid5_italy.mov", url: "https://jessvoiture.github.io/italy/"}] 
+                },
+                {   title: "Digital Sound Diary",
+                    link: "https://jessvoiture.github.io/sound_week/",
+                    year: "2022",
+                    tools: "d3.js, Google Sheets",
+                    desc: "A visualization of my listening habits throughout the course of a week. The project served as an opportunity to learn GSAP scrolltrigger animation.", 
+                    images: [],
+                    videos: [{src: "images/vid1_sound.mov", url: "https://jessvoiture.github.io/sound_week/"}]
+                },
+                {   title: "Hingham Net Zero",
+                    link: "https://www.instagram.com/p/COoHWqxMgbd/",
+                    year: "2021",
+                    tools: "Adobe Illustrator, Adobe Indesign, Adobe Photoshop, Adobe Premiere Pro",
+                    desc: "During a 6-month internship at HNZ I developed all of the organization's print and digital (social media) outputs. These are a selection of works.",
+                    images: [{src: "images/image1_hnz.jpg", 
+                                alt: "poster with the following text in green, Hingham we need a climate action plan. There is a graph below the text of the global average temperature in blue.",
+                                url: "https://www.instagram.com/p/COoHWqxMgbd/?utm_source=ig_web_copy_link"},
+                            {src: "images/image2_hnz.jpg", 
+                                alt: "image collage of protesters holding pro climate legistlation signs.",
+                                url: "https://www.instagram.com/p/CNNfAZ9sR5q/?utm_source=ig_web_copy_link"}                                ],
+                    videos: [] 
+                } 
+            ]
+            }
+        })
+
+        new Vue({
+            el: ".proj-links",
+            data: {
+            projlinks: [
+                {   title: "Community Design Layout",
+                    link: "https://www.behance.net/gallery/133243113/Community-Design-Editorial",
+                    year: "2021",
+                    image: "images/links-layouts.jpg",                
+                },
+                {   title: "Branding Campaign",
+                    link: "https://www.behance.net/gallery/133240907/Frack-No-Branding-Campaign",
+                    year: "2021",
+                    image: "images/links-frackno.jpg",     
+                },
+                {   title: "Urban Design Event Poster",
+                    link: "https://www.behance.net/gallery/126132541/Urban-Design-Poster",
+                    year: "2021",
+                    image: "images/links-urban.jpg",     
+                },
+                {   title: "Book Series Covers",
+                    link: "https://www.behance.net/gallery/126132411/Book-Series-Cover",
+                    year: "2021",
+                    image: "images/links-cover.jpg",     
+                },
+                {   title: "Food Waste Infographic",
+                    link: "https://www.behance.net/gallery/126133101/Food-Waste-Infographic",
+                    year: "2019",
+                    image: "images/links-infographic.jpg",     
+                },
+                {   title: "Ugly Duckling Movie Poster",
+                    link: "https://www.behance.net/gallery/126133231/The-Ugly-Duckling-Movie-Poster",
+                    year: "2019",
+                    image: "images/links-ugly.jpg",     
+                },
+                {   title: "Fantastic Mr. Fox Cover",
+                    link: "https://www.behance.net/gallery/131936991/Fantastic-Mr-Fox-Book-Cover",
+                    year: "2018",
+                    image: "images/links-fox.jpg",     
+                }
+            ]            
+            }
+        })
+        </script>
+
+    </div>
+
+</body>
+
+<!-- scripts -->
+<script src="main.js"></script>  
+
+</html>
